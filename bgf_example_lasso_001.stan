@@ -153,6 +153,9 @@ generated quantities{
  real meanpa[2,3];
  real meanbmi[2, 3];
  real cnt[2,3];
+   // note: sample size of the simulated data need not equal N and should often be larger in complex problems;
+   // this will generally require sampling baseline covariates either through a non-parametric sampling scheme (e.g. Bayesian bootstrap) or
+   // via a parametric model for baseline covariates. Here, the baseline covariates are fixed across samples, making this a 'conditional' or finite-sample causal effect
  row_vector[N] pa_int;
  row_vector[N] ets_int;
  row_vector[N] cumpa_int;

@@ -39,7 +39,9 @@ generated quantities {
    real bias;
    real rdi[N];
    // posterior predictive distribution (potential outcomes)
-   for(i in 1:N){
+   // note: there is no baseline covariate distribution in this example, so no baseline population to draw from - the
+   //  sample size of the simulated data need not equal N and should often be larger in complex problems;
+  for(i in 1:N){
     // individual potential risk difference 
     // (more efficient than generating potential outcomes)
     rdi[i] <- bernoulli_rng(inv_logit(intb + b[1]*g1[i] + b[2]*g1[i] + 

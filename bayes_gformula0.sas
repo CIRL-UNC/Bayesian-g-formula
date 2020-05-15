@@ -125,7 +125,9 @@ MONITOR=(rd py_1 py_0 bias);
   py = LOGISTIC(b0 + b1*x1 + b2*x2 + b3*l2);
   MODEL y ~ BINARY(py);
 
-*posterior predictive risk difference(efficient way);
+*posterior predictive risk difference();
+* note: there is no baseline covariate distribution in this example, so no baseline population to draw from - the
+*  sample size of the simulated data need not equal N and should often be larger in complex problems;
   ARRAY rdi[&N];
   *rdi[IND] = y_1-y_0;
   rdi[IND] = RAND("bernoulli",  LOGISTIC(b0 + b1 + b2 + 
