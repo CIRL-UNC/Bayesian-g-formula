@@ -111,6 +111,7 @@ DATA d;
  ind = _n_;
 RUN;
 
+%LET m=1000;
 PROC MCMC DATA = d SEED = 12123 NMC = 100000 NBI=50000 OUTPOST=dpost 
 MONITOR=(rd py_1 py_0 bias);
  TITLE "Bayesian g-formula risk difference (truth=&truerd)";
@@ -128,7 +129,7 @@ MONITOR=(rd py_1 py_0 bias);
 *posterior predictive risk difference();
 * note: there is no baseline covariate distribution in this example, so no baseline population to draw from - the
 *  sample size of the simulated data need not equal N and should often be larger in complex problems;
-  ARRAY rdi[&N];
+  ARRAY rdi[&M];
   *rdi[IND] = y_1-y_0;
   rdi[IND] = RAND("bernoulli",  LOGISTIC(b0 + b1 + b2 + 
 				  b3*RAND("bernoulli", LOGISTIC(a0 + a1)))) - 

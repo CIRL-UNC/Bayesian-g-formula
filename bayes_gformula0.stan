@@ -12,14 +12,14 @@ transformed data{
 // intevention variables
    int<lower=0,upper=1> g1[N];
    int<lower=0,upper=1> g0[N];
-   g1 <- rep_array(1, N);   
-   g0 <- rep_array(0, N);   
+   g1 = rep_array(1, N);   
+   g0 = rep_array(0, N);   
 }
 parameters {
    real inta;
    real intb;
-   vector[2] a;
-   vector[4] b;
+   vector[1] a;
+   vector[3] b;
 }
 model {
 // priors
@@ -38,17 +38,18 @@ generated quantities {
    real rd;
    real bias;
    real rdi[N];
+   int M=1000;
    // posterior predictive distribution (potential outcomes)
    // note: there is no baseline covariate distribution in this example, so no baseline population to draw from - the
    //  sample size of the simulated data need not equal N and should often be larger in complex problems;
-  for(i in 1:N){
+  for(i in 1:M){
     // individual potential risk difference 
     // (more efficient than generating potential outcomes)
-    rdi[i] <- bernoulli_rng(inv_logit(intb + b[1]*g1[i] + b[2]*g1[i] + 
+    rdi[i] = bernoulli_rng(inv_logit(intb + b[1]*g1[i] + b[2]*g1[i] + 
                             b[3]*bernoulli_rng(inv_logit(inta + g1[i]*a[1])))) - 
               bernoulli_rng(inv_logit(intb + b[1]*g0[i] + b[2]*g0[i] + 
                             b[3]*bernoulli_rng(inv_logit(inta + g0[i]*a[1]))));
    }
-   rd <- mean(rdi);
-   bias <- rd-0.2;
+   rd = mean(rdi);
+   bias = rd-0.2;
 } 
